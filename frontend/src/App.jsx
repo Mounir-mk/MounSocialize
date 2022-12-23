@@ -1,9 +1,12 @@
 import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div className="App h-screen w-screen relative">
+      <Header />
+      <Footer />
     </div>
   );
 }
