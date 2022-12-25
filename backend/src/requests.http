@@ -23,3 +23,7 @@ Content-Type: application/json
 ###
 GET http://localhost:5000/posts
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQG1haWwuY29tIiwiaWF0IjoxNjcxOTgzNzA5LCJleHAiOjE2NzE5ODczMDl9.PcFQcYk22gzXVlkUPb8ytQZJk_a6W5ozmZrG2ikZxdY
+
+###
+GET http://localhost:5000/users/1/posts/1/comments
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQG1haWwuY29tIiwiaWF0IjoxNjcxOTg5ODY3LCJleHAiOjE2NzE5OTM0Njd9.HHAk_EPiyxH7bFveoivwvKdT4R0rFOuCRA1W_7vi7MY

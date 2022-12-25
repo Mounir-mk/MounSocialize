@@ -9,45 +9,75 @@ const {
   verifyToken,
 } = require("./_services/auth");
 
-// setting up controllers
-const userController = require("./controllers/userController");
-const postController = require("./controllers/postController");
+// setting up controllerss
+const usercontrollers = require("./controllers/userControllers");
+const postcontrollers = require("./controllers/postControllers");
+const commentcontrollers = require("./controllers/commentControllers");
+const likecontrollers = require("./controllers/likeControllers");
 
 // register and login routes are public and do not require authentication
-router.post("/users", hashPassword, userController.add);
+router.post("/users", hashPassword, usercontrollers.add);
 router.post("/login", getUserByEmail, verifyPassword);
 
 // all routes below this line require authentication
 router.use(verifyToken);
 
 // routes concerning users
-router.get("/users", userController.browse);
-router.get("/users/:id", userController.read);
+router.get("/users", usercontrollers.browse);
+router.get("/users/:id", usercontrollers.read);
 
 // routes concerning posts
-router.get("/posts", postController.browse);
-router.get("/users/:id/posts", postController.browseByUser);
-router.get("/users/:id/posts/:postId", postController.read);
-router.get("/users/:id/posts/:postId/comments", postController.browseComments);
-router.get("/users/:id/posts/:postId/likes", postController.browseLikes);
-router.post("/users/:id/posts", postController.add);
-router.put("/users/:id/posts/:postId", postController.edit);
-router.delete("/users/:id/posts/:postId", postController.delete);
+router.get("/posts", postcontrollers.browse);
+router.get("/posts/:id", postcontrollers.read);
+router.post("/posts", postcontrollers.add);
+router.put("/posts/:id", postcontrollers.edit);
+router.delete("/posts/:id", postcontrollers.destroy);
+
+router.get("/users/:id/posts", postcontrollers.browseByUser);
+router.get("/users/:id/posts/:postId", postcontrollers.readByUser);
+router.post("/users/:id/posts", postcontrollers.addByUser);
+router.put("/users/:id/posts/:postId", postcontrollers.editByUser);
+router.delete("/users/:id/posts/:postId", postcontrollers.destroyByUser);
 
 // routes concerning comments
-router.post("/users/:id/posts/:postId/comments", postController.addComment);
+router.get(
+  "/users/:id/posts/:postId/comments",
+  commentcontrollers.browseByPostandUser
+);
+router.get(
+  "/users/:id/posts/:postId/comments/:commentId",
+  commentcontrollers.readByPostandUser
+);
+router.post(
+  "/users/:id/posts/:postId/comments",
+  commentcontrollers.addByPostandUser
+);
 router.put(
   "/users/:id/posts/:postId/comments/:commentId",
-  postController.editComment
+  commentcontrollers.editByPostandUser
 );
 router.delete(
   "/users/:id/posts/:postId/comments/:commentId",
-  postController.deleteComment
+  commentcontrollers.destroyByPostandUser
 );
 
-// routes concerning likes
-router.post("/users/:id/posts/:postId/likes", postController.addLike);
-router.put("/users/:id/posts/:postId/likes", postController.editLike);
-router.delete("/users/:id/posts/:postId/likes", postController.deleteLike);
+// // routes concerning likes
+router.get(
+  "/users/:id/posts/:postId/likes",
+  likecontrollers.browseByPostandUser
+);
+router.get(
+  "/users/:id/posts/:postId/likes/:likeId",
+  likecontrollers.readByPostandUser
+);
+router.post("/users/:id/posts/:postId/likes", likecontrollers.addByPostandUser);
+router.put(
+  "/users/:id/posts/:postId/likes/:likeId",
+  likecontrollers.editByPostandUser
+);
+router.delete(
+  "/users/:id/posts/:postId/likes/:likeId",
+  likecontrollers.destroyByPostandUser
+);
 
 module.exports = router;

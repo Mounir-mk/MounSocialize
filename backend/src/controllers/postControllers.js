@@ -14,31 +14,7 @@ const browse = (req, res) => {
 
 const browseByUser = (req, res) => {
   models.post
-    .findAllByUser(req.params.id)
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-const browseComments = (req, res) => {
-  models.comment
-    .findAllCommentsByPost(req.params.postId)
-    .then(([rows]) => {
-      res.send(rows);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(500);
-    });
-};
-
-const browseLikes = (req, res) => {
-  models.like
-    .findAllLikesByPost(req.params.postId)
+    .findAllByUserId(req.params.id)
     .then(([rows]) => {
       res.send(rows);
     })
@@ -51,6 +27,22 @@ const browseLikes = (req, res) => {
 const read = (req, res) => {
   models.post
     .find(req.params.id)
+    .then(([rows]) => {
+      if (rows[0] == null) {
+        res.sendStatus(404);
+      } else {
+        res.send(rows[0]);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const readByUser = (req, res) => {
+  models.post
+    .findOneByUserId(req.params.postId, req.params.id)
     .then(([rows]) => {
       if (rows[0] == null) {
         res.sendStatus(404);
@@ -86,6 +78,28 @@ const edit = (req, res) => {
     });
 };
 
+const editByUser = (req, res) => {
+  const post = req.body;
+  post.id = parseInt(req.params.postId, 10);
+  post.userId = parseInt(req.params.id, 10);
+
+  // TODO validations (length, format...)
+
+  models.post
+    .updateByUserId(post, post.userId)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 const add = (req, res) => {
   const post = req.body;
 
@@ -95,6 +109,25 @@ const add = (req, res) => {
     .insert(post)
     .then(([result]) => {
       res.location(`/posts/${result.insertId}`).sendStatus(201);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
+const addByUser = (req, res) => {
+  const post = req.body;
+  post.userId = parseInt(req.params.id, 10);
+
+  // TODO validations (length, format...)
+
+  models.post
+    .insertByUserId(post, post.userId)
+    .then(([result]) => {
+      res
+        .location(`/users/${post.userId}/posts/${result.insertId}`)
+        .sendStatus(201);
     })
     .catch((err) => {
       console.error(err);
@@ -118,13 +151,31 @@ const destroy = (req, res) => {
     });
 };
 
+const destroyByUser = (req, res) => {
+  models.post
+    .deleteByUserId(req.params.postId, req.params.id)
+    .then(([result]) => {
+      if (result.affectedRows === 0) {
+        res.sendStatus(404);
+      } else {
+        res.sendStatus(204);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(500);
+    });
+};
+
 module.exports = {
   browse,
-  browseByUser,
-  browseComments,
-  browseLikes,
   read,
   edit,
   add,
   destroy,
+  browseByUser,
+  readByUser,
+  editByUser,
+  addByUser,
+  destroyByUser,
 };

@@ -19,24 +19,40 @@ class PostManager extends AbstractManager {
     );
   }
 
-  findAllByUser(userId) {
+  findAllByUserId(userId) {
     return this.connection.query(
       `select * from ${this.table} where user_id = ?`,
       [userId]
     );
   }
 
-  findAllCommentsByPost(postId) {
-    return this.connection.query(`select * from comment where post_id = ?`, [
-      postId,
-    ]);
+  findOneByUserId(postId, userId) {
+    return this.connection.query(
+      `select * from ${this.table} where id = ? and user_id = ?`,
+      [postId, userId]
+    );
   }
 
-  findAllLikesByPost(postId) {
-    return this.connection.query(`select * from like where post_id = ?`, [
-      postId,
-    ]);
+  updateByUserId(post, userId) {
+    return this.connection.query(
+      `update ${this.table} set title = ? where id = ? and user_id = ?`,
+      [post.title, post.id, userId]
+    );
   }
+
+  insertByUserId(post, userId) {
+    return this.connection.query(
+      `insert into ${this.table} (title, user_id) values (?, ?)`,
+      [post.title, userId]
+    );
+  }
+
+  deleteByUserId = (postId, userId) => {
+    return this.connection.query(
+      `delete from ${this.table} where id = ? and user_id = ?`,
+      [postId, userId]
+    );
+  };
 }
 
 module.exports = PostManager;
