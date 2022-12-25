@@ -1,5 +1,5 @@
 import React, { useRef, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import eyeOpen from "../assets/eye.svg";
 import eyeClosed from "../assets/eye-off.svg";
@@ -127,6 +127,24 @@ function LoginPage() {
             {errors.match && (
               <p className="text-red-500 text-sm">{errors.match}</p>
             )}
+            <div className="flex flex-col gap-2">
+              <p className="text-sm text-center">Vous n'avez pas de compte ?</p>
+              <NavLink
+                to="/register"
+                className="text-sm text-center text-[#9B084F] font-bold"
+              >
+                Créer un compte
+              </NavLink>
+            </div>
+            <div className="flex flex-col gap-2">
+              <p className="text-sm text-center">Mot de passe oublié ?</p>
+              <NavLink
+                to="/forgot-password"
+                className="text-sm text-center text-[#9B084F] font-bold"
+              >
+                Réinitialiser le mot de passe
+              </NavLink>
+            </div>
             <button
               type="submit"
               className="bg-blue-dianne text-white rounded-lg p-2"

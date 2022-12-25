@@ -26,7 +26,7 @@ function App() {
     <div className="App w-screen relative">
       {auth.isAuthenticated && <Header />}
       <Routes>
-        <Route path="/" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LoginPage />} />
         {auth.isAuthenticated && (
           <Route path="/homepage" element={<HomePage />} />
