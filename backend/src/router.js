@@ -6,21 +6,21 @@ const {
   hashPassword,
   getUserByEmail,
   verifyPassword,
-  verifyToken,
+  // verifyToken,
 } = require("./_services/auth");
 
 // setting up controllerss
 const usercontrollers = require("./controllers/userControllers");
 const postcontrollers = require("./controllers/postControllers");
 const commentcontrollers = require("./controllers/commentControllers");
-const likecontrollers = require("./controllers/likeControllers");
+const favoritecontrollers = require("./controllers/favoriteControllers");
 
 // register and login routes are public and do not require authentication
 router.post("/users", hashPassword, usercontrollers.add);
 router.post("/login", getUserByEmail, verifyPassword);
 
 // all routes below this line require authentication
-router.use(verifyToken);
+// router.use(verifyToken);
 
 // routes concerning users
 router.get("/users", usercontrollers.browse);
@@ -61,23 +61,26 @@ router.delete(
   commentcontrollers.destroyByPostandUser
 );
 
-// // routes concerning likes
+// // routes concerning favorites
 router.get(
-  "/users/:id/posts/:postId/likes",
-  likecontrollers.browseByPostandUser
+  "/users/:id/posts/:postId/favorites",
+  favoritecontrollers.browseByPostandUser
 );
 router.get(
-  "/users/:id/posts/:postId/likes/:likeId",
-  likecontrollers.readByPostandUser
+  "/users/:id/posts/:postId/favorites/:favoriteId",
+  favoritecontrollers.readByPostandUser
 );
-router.post("/users/:id/posts/:postId/likes", likecontrollers.addByPostandUser);
+router.post(
+  "/users/:id/posts/:postId/favorites",
+  favoritecontrollers.addByPostandUser
+);
 router.put(
-  "/users/:id/posts/:postId/likes/:likeId",
-  likecontrollers.editByPostandUser
+  "/users/:id/posts/:postId/favorites/:favoriteId",
+  favoritecontrollers.editByPostandUser
 );
 router.delete(
-  "/users/:id/posts/:postId/likes/:likeId",
-  likecontrollers.destroyByPostandUser
+  "/users/:id/posts/:postId/favorites/:favoriteId",
+  favoritecontrollers.destroyByPostandUser
 );
 
 module.exports = router;

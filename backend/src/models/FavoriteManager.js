@@ -1,21 +1,21 @@
 const AbstractManager = require("./AbstractManager");
 
-class CommentManager extends AbstractManager {
+class LikeManager extends AbstractManager {
   constructor() {
-    super({ table: "comment" });
+    super({ table: "like" });
   }
 
-  insert(comment) {
+  insert(like) {
     return this.connection.query(
       `insert into ${this.table} (title) values (?)`,
-      [comment.title]
+      [like.title]
     );
   }
 
-  update(comment) {
+  update(like) {
     return this.connection.query(
       `update ${this.table} set title = ? where id = ?`,
-      [comment.title, comment.id]
+      [like.title, like.id]
     );
   }
 
@@ -26,33 +26,33 @@ class CommentManager extends AbstractManager {
     );
   };
 
-  findOneByPostIdandUserId = (commentId, postId, userId) => {
+  findOneByPostIdandUserId = (likeId, postId, userId) => {
     return this.connection.query(
       `select * from ${this.table} where id = ? and post_id = ? and user_id = ?`,
-      [commentId, postId, userId]
+      [likeId, postId, userId]
     );
   };
 
-  updateByPostIdandUserId = (comment, postId, userId) => {
+  updateByPostIdandUserId = (like, postId, userId) => {
     return this.connection.query(
       `update ${this.table} set title = ? where id = ? and post_id = ? and user_id = ?`,
-      [comment.title, comment.id, postId, userId]
+      [like.title, like.id, postId, userId]
     );
   };
 
-  insertByPostIdandUserId = (comment, postId, userId) => {
+  insertByPostIdandUserId = (like, postId, userId) => {
     return this.connection.query(
       `insert into ${this.table} (title, post_id, user_id) values (?, ?, ?)`,
-      [comment.title, postId, userId]
+      [like.title, postId, userId]
     );
   };
 
-  destroyByPostandUser = (commentId, postId, userId) => {
+  destroyByPostandUser = (likeId, postId, userId) => {
     return this.connection.query(
       `delete from ${this.table} where id = ? and post_id = ? and user_id = ?`,
-      [commentId, postId, userId]
+      [likeId, postId, userId]
     );
   };
 }
 
-module.exports = CommentManager;
+module.exports = LikeManager;

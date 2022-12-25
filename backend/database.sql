@@ -39,7 +39,7 @@ INSERT INTO comment (content, user_id, post_id) VALUES ('This is my first commen
 ('This is my third comment', 1, 1);
 
 
-CREATE TABLE `like` (
+CREATE TABLE favorite (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
   post_id INT NOT NULL,
@@ -47,6 +47,6 @@ CREATE TABLE `like` (
   FOREIGN KEY (post_id) REFERENCES post(id)
 );
  
-INSERT INTO `like` (user_id, post_id) VALUES (1, 1),
+INSERT INTO favorite (user_id, post_id) VALUES (1, 1),
 (1, 2),
 (1, 3);
