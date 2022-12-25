@@ -1,10 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import eyeOpen from "../assets/eye.svg";
 import eyeClosed from "../assets/eye-off.svg";
+import { AuthContext } from "../services/AuthContext";
 
 function LoginPage() {
+  const { setAuth } = useContext(AuthContext);
   const [isPasswordVisible, setIsPasswordVisible] = useState({
     password: false,
     passwordConfirm: false,
@@ -36,9 +38,11 @@ function LoginPage() {
         .post(`${import.meta.env.VITE_BACKEND_URL}/login`, userInformations)
         .then((result) => {
           if (result.data.token) {
-            localStorage.setItem("token", result.data.token);
+            setAuth({
+              isAuthenticated: true,
+              token: result.data.token,
+            });
             navigate("/homepage");
-            console.warn(result.data.token, "token", "connected");
           } else {
             newErrors.match = "L'email ou le mot de passe est incorrect";
             setErrors(newErrors);

@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import axios from "axios";
+import { AuthContext } from "../services/AuthContext";
 
 function HomePage() {
+  const { auth } = useContext(AuthContext);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/users`, {
+        headers: {
+          Authorization: `Bearer ${auth.token}`,
+        },
+      })
+      .then((result) => {
+        console.warn(result.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <div className="bg-gray-100">
       <nav className="bg-white p-6 shadow-md">
