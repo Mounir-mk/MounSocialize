@@ -55,7 +55,7 @@ function Register() {
       axios
         .post(`${import.meta.env.VITE_BACKEND_URL}/users`, userInformations)
         .then(() => {
-          navigate("/image");
+          navigate("/login");
         })
         .catch((error) => {
           console.error(error);
@@ -64,32 +64,30 @@ function Register() {
   };
 
   return (
-    <main className="w-screen  flex justify-center items-center h-screen md:bg-blue-dianne md:py-0 pt-8">
-      <div className="w-[80%] rounded-lg flex justify-center items-center pt-4 pb-4 md:py-0">
-        <section className="h-full w-full flex gap-2 md:gap-10 flex-col md:flex-row justify-center items-center">
-          <article
-            id="login"
-            className="bg-white h-full md:w-1/3 flex flex-col md:gap-2 md:p-4 rounded-lg justify-evenly items-center"
-          >
-            <h1 className="text-2xl font-bold text-center">Inscription</h1>
-            <ProfilePicture
-              profilePicture={profilePicture}
-              setProfilePicture={setProfilePicture}
-            />
-            <RegisterForm
-              firstnameRef={firstnameRef}
-              lastnameRef={lastnameRef}
-              emailRef={emailRef}
-              passwordRef={passwordRef}
-              passwordConfirmRef={passwordConfirmRef}
-              isPasswordVisible={isPasswordVisible}
-              setIsPasswordVisible={setIsPasswordVisible}
-              errors={errors}
-              handleSubmit={handleSubmit}
-            />
-          </article>
-        </section>
-      </div>
+    <main className="w-screen h-screen flex justify-center items-center md:bg-blue-dianne md:py-0">
+      <section className="h-max-full w-[80%] flex gap-2 md:gap-10 flex-col md:flex-row justify-center items-center">
+        <article
+          id="login"
+          className="bg-white h-full md:w-1/3 flex flex-col md:gap-2 md:p-4 rounded-lg justify-evenly items-center"
+        >
+          <h1 className="text-2xl font-bold text-center">Inscription</h1>
+          <ProfilePicture
+            profilePicture={profilePicture}
+            setProfilePicture={setProfilePicture}
+          />
+          <RegisterForm
+            firstnameRef={firstnameRef}
+            lastnameRef={lastnameRef}
+            emailRef={emailRef}
+            passwordRef={passwordRef}
+            passwordConfirmRef={passwordConfirmRef}
+            isPasswordVisible={isPasswordVisible}
+            setIsPasswordVisible={setIsPasswordVisible}
+            errors={errors}
+            handleSubmit={handleSubmit}
+          />
+        </article>
+      </section>
     </main>
   );
 }
