@@ -21,34 +21,7 @@ function HomePage() {
 
   return (
     <div className="bg-gray-100">
-      <nav className="bg-white p-6 shadow-md">
-        <div className="container mx-auto flex items-center justify-between">
-          <p href="#" className="font-bold text-2xl">
-            My Blog
-          </p>
-          <div>
-            <p
-              href="#"
-              className="px-4 py-2 font-bold text-blue-700 rounded-full hover:bg-blue-100 hover:text-blue-800"
-            >
-              Home
-            </p>
-            <p
-              href="#"
-              className="px-4 py-2 font-bold text-blue-700 rounded-full hover:bg-blue-100 hover:text-blue-800"
-            >
-              About
-            </p>
-            <p
-              href="#"
-              className="px-4 py-2 font-bold text-blue-700 rounded-full hover:bg-blue-100 hover:text-blue-800"
-            >
-              Contact
-            </p>
-          </div>
-        </div>
-      </nav>
-      <main className="container mx-auto p-6 mt-8">
+      <main className="container mx-auto ">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
           Welcome to My Blog
         </h1>
