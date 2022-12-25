@@ -41,6 +41,7 @@ INSERT INTO comment (content, user_id, post_id) VALUES ('This is my first commen
 
 CREATE TABLE favorite (
   id INT AUTO_INCREMENT PRIMARY KEY,
+  status BOOLEAN DEFAULT 0,
   user_id INT NOT NULL,
   post_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES user(id),

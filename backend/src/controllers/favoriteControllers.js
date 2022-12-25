@@ -1,7 +1,7 @@
 const models = require("../models");
 
 const browseByPostandUser = (req, res) => {
-  models.like
+  models.favorite
     .findAllByPostIdandUserId(req.params.postId, req.params.id)
     .then(([rows]) => {
       res.send(rows);
@@ -13,9 +13,9 @@ const browseByPostandUser = (req, res) => {
 };
 
 const readByPostandUser = (req, res) => {
-  models.like
+  models.favorite
     .findOneByPostIdandUserId(
-      req.params.likeId,
+      req.params.favoriteId,
       req.params.postId,
       req.params.id
     )
@@ -33,9 +33,9 @@ const readByPostandUser = (req, res) => {
 };
 
 const editByPostandUser = (req, res) => {
-  const like = req.body;
-  models.like
-    .updateByPostIdandUserId(like, req.params.postId, req.params.id)
+  const favorite = req.body;
+  models.favorite
+    .updateByPostIdandUserId(favorite, req.params.postId, req.params.id)
     .then(([rows]) => {
       if (rows.affectedRows === 0) {
         res.sendStatus(404);
@@ -50,12 +50,12 @@ const editByPostandUser = (req, res) => {
 };
 
 const addByPostandUser = (req, res) => {
-  const like = req.body;
-  models.like
-    .insertByPostIdandUserId(like, req.params.postId, req.params.id)
+  const favorite = req.body;
+  models.favorite
+    .insertByPostIdandUserId(favorite, req.params.postId, req.params.id)
     .then(([rows]) => {
       res.location(
-        `/users/${req.params.id}/posts/${req.params.postId}/likes/${rows.insertId}`
+        `/users/${req.params.id}/posts/${req.params.postId}/favorites/${rows.insertId}`
       );
     })
     .catch((err) => {
@@ -65,9 +65,9 @@ const addByPostandUser = (req, res) => {
 };
 
 const destroyByPostandUser = (req, res) => {
-  models.like
+  models.favorite
     .deleteByPostIdandUserId(
-      req.params.likeId,
+      req.params.favoriteId,
       req.params.postId,
       req.params.id
     )

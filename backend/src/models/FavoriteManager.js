@@ -1,21 +1,21 @@
 const AbstractManager = require("./AbstractManager");
 
-class LikeManager extends AbstractManager {
+class FavoriteManager extends AbstractManager {
   constructor() {
-    super({ table: "like" });
+    super({ table: "favorite" });
   }
 
-  insert(like) {
+  insert(favorite) {
     return this.connection.query(
       `insert into ${this.table} (title) values (?)`,
-      [like.title]
+      [favorite.title]
     );
   }
 
-  update(like) {
+  update(favorite) {
     return this.connection.query(
       `update ${this.table} set title = ? where id = ?`,
-      [like.title, like.id]
+      [favorite.title, favorite.id]
     );
   }
 
@@ -26,33 +26,33 @@ class LikeManager extends AbstractManager {
     );
   };
 
-  findOneByPostIdandUserId = (likeId, postId, userId) => {
+  findOneByPostIdandUserId = (favoriteId, postId, userId) => {
     return this.connection.query(
       `select * from ${this.table} where id = ? and post_id = ? and user_id = ?`,
-      [likeId, postId, userId]
+      [favoriteId, postId, userId]
     );
   };
 
-  updateByPostIdandUserId = (like, postId, userId) => {
+  updateByPostIdandUserId = (favorite, postId, userId) => {
     return this.connection.query(
       `update ${this.table} set title = ? where id = ? and post_id = ? and user_id = ?`,
-      [like.title, like.id, postId, userId]
+      [favorite.title, favorite.id, postId, userId]
     );
   };
 
-  insertByPostIdandUserId = (like, postId, userId) => {
+  insertByPostIdandUserId = (favorite, postId, userId) => {
     return this.connection.query(
       `insert into ${this.table} (title, post_id, user_id) values (?, ?, ?)`,
-      [like.title, postId, userId]
+      [favorite.title, postId, userId]
     );
   };
 
-  destroyByPostandUser = (likeId, postId, userId) => {
+  destroyByPostandUser = (favoriteId, postId, userId) => {
     return this.connection.query(
       `delete from ${this.table} where id = ? and post_id = ? and user_id = ?`,
-      [likeId, postId, userId]
+      [favoriteId, postId, userId]
     );
   };
 }
 
-module.exports = LikeManager;
+module.exports = FavoriteManager;
