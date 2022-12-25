@@ -5,7 +5,7 @@ import { AuthContext } from "../services/AuthContext";
 function HomePage() {
   const { auth } = useContext(AuthContext);
   const [posts, setPosts] = useState(null);
-  useEffect(async () => {
+  useEffect(() => {
     // axios
     //   .get(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
     //     headers: {
@@ -20,19 +20,24 @@ function HomePage() {
     //     console.error(error);
     //   });
 
-    try {
-      const postsData = await axios.get(
-        `${import.meta.env.VITE_BACKEND_URL}/posts`,
-        {
-          headers: {
-            Authorization: `Bearer ${auth.token}`,
-          },
-        }
-      );
-      setPosts(postsData);
-    } catch (error) {
-      console.error(error);
-    }
+    const fetchPostData = async () => {
+      try {
+        const postsData = await axios
+          .get(`${import.meta.env.VITE_BACKEND_URL}/posts`, {
+            headers: {
+              Authorization: `Bearer ${auth.token}`,
+            },
+          })
+          .then((result) => {
+            return result.data;
+          });
+
+        setPosts(postsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPostData();
   }, []);
 
   return (

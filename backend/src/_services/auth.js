@@ -37,6 +37,7 @@ const getUserByEmail = (req, res, next) => {
 };
 
 const verifyPassword = (req, res) => {
+  const { id } = req.user;
   const { password } = req.body;
   argon2
     .verify(req.user.hashPassword, password)
@@ -47,7 +48,7 @@ const verifyPassword = (req, res) => {
           process.env.JWT_SECRET,
           { expiresIn: "1h" }
         );
-        res.json({ token });
+        res.send({ token, id });
       } else {
         res.sendStatus(401);
       }
