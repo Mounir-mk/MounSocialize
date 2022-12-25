@@ -1,32 +1,115 @@
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
+import homeIcon from "../assets/headerIcon/home.svg";
+import calendarIcon from "../assets/headerIcon/calendar.svg";
+import smileIcon from "../assets/headerIcon/smile.svg";
+import menuIcon from "../assets/headerIcon/menu.svg";
+import userIcon from "../assets/headerIcon/sampleprofile.png";
+import plusIcon from "../assets/headerIcon/plus.svg";
+import user from "../assets/headerIcon/user.svg";
+import logout from "../assets/headerIcon/log-out.svg";
+import message from "../assets/headerIcon/message-circle.svg";
+import { AuthContext } from "../services/AuthContext";
 
 function Header() {
+  const { setAuth } = useContext(AuthContext);
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const handleLogout = () => {
+    setAuth({
+      isAuthenticated: false,
+      token: null,
+    });
+  };
   return (
-    <header className="flex h-24 px-16 w-full justify-between items-center fixed border-b-2 border-slate-200">
-      <img src={logo} alt="logo" className="h-16 w-16 rounded-full" />
-      <section>
-        <input
-          type="text"
-          placeholder="Search"
-          className="h-10 w-96 border-2 border-slate-200 rounded-full px-4"
-        />
-      </section>
+    <header className="w-full flex items-center justify-around border-solid border-b-2 h-16 bg-white">
+      <img src={logo} alt="MakeSense" className="max-h-4 md:max-h-8 w-auto" />
       <nav>
-        <ul className="flex gap-3 text-black">
+        <ul className="flex gap-4">
           <li>
-            <p>Home</p>
+            <NavLink
+              to="/decisions/create"
+              className="group border rounded-full h-8 w-8 flex items-center justify-center relative"
+            >
+              <img src={plusIcon} alt="Plus" className="max-h-4 w-auto" />
+              <p className="hidden absolute top-full group-hover:block text-xs whitespace-nowrap mx-auto bg-slate-600 text-white px-2 rounded-md">
+                Poster un article
+              </p>
+            </NavLink>
+          </li>
+          <li className="flex flex-col hover:underline justify-center">
+            <NavLink
+              to="/"
+              className="flex flex-col hover:underline justify-center"
+            >
+              <img src={homeIcon} alt="Home" className="max-h-4 w-auto" />
+              <span className="hidden md:inline font-bold text-xs">
+                Parcourir les articles
+              </span>
+            </NavLink>
+          </li>
+          <li className="flex flex-col hover:underline justify-center">
+            <img src={calendarIcon} alt="Calendar" className="max-h-4 w-auto" />
+            <span className="hidden md:inline font-bold text-xs">
+              Mes articles
+            </span>
+          </li>
+          <li className="flex flex-col hover:underline justify-center">
+            <img src={smileIcon} alt="Smile" className="max-h-4 w-auto" />
+            <span className="hidden md:inline font-bold text-xs">
+              Notifications
+            </span>
+          </li>
+          <li className="flex flex-col hover:underline justify-center">
+            <img src={message} alt="Message" className="max-h-4 w-auto" />
+            <span className="hidden md:inline font-bold text-xs">Messages</span>
           </li>
           <li>
-            <p>Friends</p>
-          </li>
-          <li>
-            <p>Messages</p>
-          </li>
-          <li>
-            <p>Notifications</p>
-          </li>
-          <li>
-            <p>Profile</p>
+            <button
+              type="button"
+              className="w-20 h-8 rounded-full bg-slate-400 flex justify-around items-center relative"
+              onClick={() => setIsMenuOpen((old) => !old)}
+            >
+              <img src={menuIcon} alt="Menu" className="max-h-4 w-auto" />
+              <img
+                src={userIcon}
+                alt="User"
+                className="h-8 w-8 rounded-full object-cover"
+              />
+              {isMenuOpen && (
+                <div className="absolute top-full w-32">
+                  <ul className="bg-white border border-solid border-gray-300 rounded-md shadow-md">
+                    <li className="p-2 hover:bg-gray-200 text-blue-dianne text-left border-b-2 text-sm font-bold">
+                      <NavLink
+                        to="/profile"
+                        className="flex items-center gap-1"
+                      >
+                        <img
+                          src={user}
+                          alt="User"
+                          className="max-h-4 w-auto inline-block"
+                        />
+                        <p>Mon Profil</p>
+                      </NavLink>
+                    </li>
+                    <li className="p-2 hover:bg-gray-200 text-blue-dianne text-left text-sm font-bold">
+                      <NavLink
+                        to="/login"
+                        className="flex items-center gap-1 "
+                        onClick={handleLogout}
+                      >
+                        <img
+                          src={logout}
+                          alt="Logout"
+                          className="max-h-4 w-auto inline-block"
+                        />
+                        <p>Déconnexion</p>
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </button>
           </li>
         </ul>
       </nav>

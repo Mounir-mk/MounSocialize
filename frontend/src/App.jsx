@@ -1,14 +1,36 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Register from "./pages/Register";
-import DisplayImageBlob from "./pages/DisplayImageBlob";
+import LoginPage from "./pages/LoginPage";
+import { AuthContext } from "./services/AuthContext";
+import HomePage from "./pages/HomePage";
+import Header from "./components/Header";
 
 function App() {
+  const navigate = useNavigate();
+  const { auth } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!auth.isAuthenticated) {
+      if (
+        window.location.pathname !== "/register" &&
+        window.location.pathname !== "/login"
+      ) {
+        navigate("/login");
+      }
+    }
+  }, [auth.isAuthenticated, navigate]);
+
   return (
-    <div className="App h-screen w-screen relative">
+    <div className="App w-screen relative">
+      {auth.isAuthenticated && <Header />}
       <Routes>
-        <Route path="/" element={<Register />} />
-        <Route path="/image" element={<DisplayImageBlob />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<LoginPage />} />
+        {auth.isAuthenticated && (
+          <Route path="/homepage" element={<HomePage />} />
+        )}
       </Routes>
     </div>
   );

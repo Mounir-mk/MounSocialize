@@ -1,1 +1,21 @@
-GET http://localhost:5000/users/1
+GET http://localhost:5000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqb2huZG9lQG1haWwuY29tIiwiaWF0IjoxNjcxOTgzNzA5LCJleHAiOjE2NzE5ODczMDl9.PcFQcYk22gzXVlkUPb8ytQZJk_a6W5ozmZrG2ikZxdY
+###
+POST http://localhost:5000/users
+Content-Type: application/json
+
+{
+    "firstname": "John",
+    "lastname": "Doe",
+    "email": "johndoe@mail.com",
+    "password": "john51100"
+}
+
+###
+POST http://localhost:5000/login
+Content-Type: application/json
+
+{
+    "email": "johndoe@mail.com",
+    "password": "john51100"
+}

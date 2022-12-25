@@ -22,7 +22,10 @@ function RegisterForm({
         handleSubmit();
       }}
     >
-      <label htmlFor="fistname" className="font-bold">
+      <label
+        htmlFor="fistname"
+        className="font-bold after:content-['*'] after:text-red-500 after:ml-1"
+      >
         Prénom
       </label>
       <input
@@ -38,7 +41,10 @@ function RegisterForm({
       {errors.firstname && (
         <p className="text-red-500 text-sm">{errors.firstname}</p>
       )}
-      <label htmlFor="lastname" className="font-bold">
+      <label
+        htmlFor="lastname"
+        className="font-bold after:content-['*'] after:text-red-500 after:ml-1"
+      >
         Nom
       </label>
       <input
@@ -53,7 +59,10 @@ function RegisterForm({
       {errors.lastname && (
         <p className="text-red-500 text-sm">{errors.lastname}</p>
       )}
-      <label htmlFor="email" className="font-bold">
+      <label
+        htmlFor="email"
+        className="font-bold after:content-['*'] after:text-red-500 after:ml-1"
+      >
         Email
       </label>
       <input
@@ -67,7 +76,10 @@ function RegisterForm({
         ref={emailRef}
       />
       {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
-      <label htmlFor="password" className="font-bold">
+      <label
+        htmlFor="password"
+        className="font-bold after:content-['*'] after:text-red-500 after:ml-1"
+      >
         Mot de passe
       </label>
       <div className="relative w-full">
