@@ -41,6 +41,7 @@ function LoginPage() {
             setAuth({
               isAuthenticated: true,
               token: result.data.token,
+              userId: result.data.id,
             });
             navigate("/homepage");
           } else {
